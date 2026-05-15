@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Hackathon Grading Calculator</title>
+</head>
+
+<body class="bg-gray-100 p-6">
+  <div class="max-w-5xl mx-auto bg-white p-6 rounded-2xl shadow">
+
+    <h1 class="text-2xl font-bold mb-6">🏆 Hackathon Grading Calculator</h1>
+
+    <!-- MVP -->
+    <Section class="mb-6">
+      <h2 class="font-semibold text-lg mb-2">1. MVP Product (100%)</h2>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+        <input type="number" class="mvp w-full p-2 border rounded" placeholder="Functionality" />
+        <input type="number" class="mvp w-full p-2 border rounded" placeholder="AI Integration" />
+        <input type="number" class="mvp w-full p-2 border rounded" placeholder="Completeness" />
+        <input type="number" class="mvp w-full p-2 border rounded" placeholder="Usability" />
+        <input type="number" class="mvp w-full p-2 border rounded" placeholder="Stability" />
+      </div>
+    </Section>
+
+    <!-- Frontend -->
+    <Section class="mb-6">
+      <h2 class="font-semibold text-lg mb-2">2. Frontend (50%)</h2>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+        <input type="number" class="frontend w-full p-2 border rounded" placeholder="UI/UX" />
+        <input type="number" class="frontend w-full p-2 border rounded" placeholder="Components" />
+        <input type="number" class="frontend w-full p-2 border rounded" placeholder="Code Quality" />
+        <input type="number" class="frontend w-full p-2 border rounded" placeholder="API Integration" />
+        <input type="number" class="frontend w-full p-2 border rounded" placeholder="Performance" />
+      </div>
+    </Section>
+
+    <!-- Backend -->
+    <Section class="mb-6">
+      <h2 class="font-semibold text-lg mb-2">3. Backend (50%)</h2>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+        <input type="number" class="backend w-full p-2 border rounded" placeholder="Architecture" />
+        <input type="number" class="backend w-full p-2 border rounded" placeholder="Database" />
+        <input type="number" class="backend w-full p-2 border rounded" placeholder="API Design" />
+        <input type="number" class="backend w-full p-2 border rounded" placeholder="Security" />
+        <input type="number" class="backend w-full p-2 border rounded" placeholder="Code Quality" />
+      </div>
+    </Section>
+
+    <!-- Marketing -->
+    <Section class="mb-6">
+      <h2 class="font-semibold text-lg mb-2">4. Marketing (50%)</h2>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+        <input type="number" class="marketing w-full p-2 border rounded" placeholder="Presentation" />
+        <input type="number" class="marketing w-full p-2 border rounded" placeholder="Storytelling" />
+        <input type="number" class="marketing w-full p-2 border rounded" placeholder="Slides" />
+        <input type="number" class="marketing w-full p-2 border rounded" placeholder="Video" />
+        <input type="number" class="marketing w-full p-2 border rounded" placeholder="Understanding" />
+      </div>
+    </Section>
+
+    <button onclick="calculate()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">
+      Calculate Score
+    </button>
+
+    <!-- Results -->
+    <div class="mt-6 space-y-2">
+      <p id="mvpResult"></p>
+      <p id="frontendResult"></p>
+      <p id="backendResult"></p>
+      <p id="marketingResult"></p>
+      <h2 id="finalResult" class="text-xl font-bold mt-4"></h2>
+    </div>
+
+    <!-- 📌 FORMULA SECTION -->
+    <div class="mt-8 p-4 bg-gray-50 border rounded-lg">
+      <h2 class="text-lg font-bold mb-3">📌 Grading Formula Reference</h2>
+
+      <div class="space-y-2 text-sm text-gray-700">
+
+        <p><strong>MVP Score (Project):</strong> (Average of 5 criteria ÷ 5) × 100</p>
+
+        <p><strong>Frontend Score (Activity):</strong> (Average of 5 criteria ÷ 5) × 50</p>
+
+        <p><strong>Backend Score (Activity):</strong> (Average of 5 criteria ÷ 5) × 50</p>
+
+        <p><strong>Marketing Score (Activity):</strong> (Average of 5 criteria ÷ 5) × 50</p>
+
+        <hr class="my-2">
+
+        <p><strong>Total Score:</strong> MVP + Frontend + Backend + Marketing</p>
+
+        <p><strong>Final Grade (Project) (/100):</strong> (Total ÷ 250) × 100</p>
+
+      </div>
+    </div>
+
+  </div>
+
+<script>
+function getAverage(className) {
+  const inputs = document.querySelectorAll("." + className);
+  let sum = 0;
+  let count = 0;
+
+  inputs.forEach(input => {
+    const val = parseFloat(input.value);
+    if (!isNaN(val)) {
+      sum += val;
+      count++;
+    }
+  });
+
+  return count ? sum / count : 0;
+}
+
+function calculate() {
+  const mvpAvg = getAverage("mvp");
+  const frontendAvg = getAverage("frontend");
+  const backendAvg = getAverage("backend");
+  const marketingAvg = getAverage("marketing");
+
+  const mvpScore = (mvpAvg / 5) * 100;
+  const frontendScore = (frontendAvg / 5) * 50;
+  const backendScore = (backendAvg / 5) * 50;
+  const marketingScore = (marketingAvg / 5) * 50;
+
+  const total = mvpScore + frontendScore + backendScore + marketingScore;
+
+  document.getElementById("mvpResult").innerText =
+    `MVP Score (Project): ${mvpScore.toFixed(2)}/100`;
+
+  document.getElementById("frontendResult").innerText =
+    `Frontend Score (Activity): ${frontendScore.toFixed(2)}/50`;
+
+  document.getElementById("backendResult").innerText =
+    `Backend Score (Activity): ${backendScore.toFixed(2)}/50`;
+
+  document.getElementById("marketingResult").innerText =
+    `Marketing Score (Activity): ${marketingScore.toFixed(2)}/50`;
+
+  document.getElementById("finalResult").innerText =
+    `Final Score (Final): ${total.toFixed(2)} / 250 → ${(total / 2.5).toFixed(2)} / 100`;
+}
+</script>
+
+</body>
+</html>
